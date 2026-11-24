@@ -1,0 +1,344 @@
+{
+  "controls": {
+    "connect_s": 15,
+    "read_s": 60,
+    "heavy_s": 150,
+    "max_requests": 180,
+    "max_tokens": 600000,
+    "consecutive_failures": 3,
+    "cache_repeats": 8,
+    "sustained_rpm": 30,
+    "budget_usd": null,
+    "weights": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "rules": {
+      "input_tolerance": 2,
+      "output_tolerance": 3,
+      "high_injection": 1000,
+      "high_cache": 0.7,
+      "warm_ttft_ratio": 0.8,
+      "answer_ttft_ratio": 0.4,
+      "effort_ratio": 1.15,
+      "duration_ratio": 1.1,
+      "tail_ratio": 0.65,
+      "burst_gap_s": 2,
+      "timeout_window_s": 3,
+      "assumed_cache_ratio": 0.25,
+      "score_a": 90,
+      "score_b": 75,
+      "score_c": 50
+    }
+  },
+  "probes": [
+    {
+      "id": 1,
+      "name": "分词指纹",
+      "group": "能力计分",
+      "expensive": false
+    },
+    {
+      "id": 2,
+      "name": "推理能力",
+      "group": "能力计分",
+      "expensive": false
+    },
+    {
+      "id": 3,
+      "name": "结构与工具闭环",
+      "group": "能力计分",
+      "expensive": false
+    },
+    {
+      "id": 4,
+      "name": "指令层级",
+      "group": "能力计分",
+      "expensive": false
+    },
+    {
+      "id": 5,
+      "name": "大海捞针",
+      "group": "能力计分",
+      "expensive": false
+    },
+    {
+      "id": 6,
+      "name": "注入 A/B 差分",
+      "group": "请求质量",
+      "expensive": false
+    },
+    {
+      "id": 7,
+      "name": "缓存合规与冷启动",
+      "group": "请求质量",
+      "expensive": false
+    },
+    {
+      "id": 8,
+      "name": "不可见字符",
+      "group": "请求质量",
+      "expensive": false
+    },
+    {
+      "id": 9,
+      "name": "流式完整性",
+      "group": "请求质量",
+      "expensive": false
+    },
+    {
+      "id": 10,
+      "name": "协议与原生 Responses",
+      "group": "请求质量",
+      "expensive": false
+    },
+    {
+      "id": 11,
+      "name": "阶梯输入验账",
+      "group": "验账与计费",
+      "expensive": false
+    },
+    {
+      "id": 12,
+      "name": "重复稳定性",
+      "group": "验账与计费",
+      "expensive": false
+    },
+    {
+      "id": 13,
+      "name": "输出计数交叉验证",
+      "group": "验账与计费",
+      "expensive": false
+    },
+    {
+      "id": 14,
+      "name": "计费取整",
+      "group": "验账与计费",
+      "expensive": false
+    },
+    {
+      "id": 15,
+      "name": "余额与有效折扣",
+      "group": "验账与计费",
+      "expensive": false
+    },
+    {
+      "id": 16,
+      "name": "实测缓存率",
+      "group": "缓存深度",
+      "expensive": false
+    },
+    {
+      "id": 17,
+      "name": "缓存失效",
+      "group": "缓存深度",
+      "expensive": false
+    },
+    {
+      "id": 18,
+      "name": "TTFT 交叉验真",
+      "group": "缓存深度",
+      "expensive": false
+    },
+    {
+      "id": 19,
+      "name": "时间与多会话粘性",
+      "group": "缓存深度",
+      "expensive": false
+    },
+    {
+      "id": 20,
+      "name": "缓存敏感度推演",
+      "group": "缓存深度",
+      "expensive": false
+    },
+    {
+      "id": 21,
+      "name": "用量改写层",
+      "group": "科技签名",
+      "expensive": false
+    },
+    {
+      "id": 22,
+      "name": "注入指纹",
+      "group": "科技签名",
+      "expensive": false
+    },
+    {
+      "id": 23,
+      "name": "模型与指纹漂移",
+      "group": "科技签名",
+      "expensive": false
+    },
+    {
+      "id": 24,
+      "name": "混池与轮换上游",
+      "group": "科技签名",
+      "expensive": false
+    },
+    {
+      "id": 25,
+      "name": "假流式",
+      "group": "科技签名",
+      "expensive": false
+    },
+    {
+      "id": 26,
+      "name": "答案缓存",
+      "group": "科技签名",
+      "expensive": false
+    },
+    {
+      "id": 27,
+      "name": "BPS 类指纹",
+      "group": "科技签名",
+      "expensive": false
+    },
+    {
+      "id": 28,
+      "name": "加密推理链",
+      "group": "模型与 Codex",
+      "expensive": false
+    },
+    {
+      "id": 29,
+      "name": "工具参数转义",
+      "group": "模型与 Codex",
+      "expensive": false
+    },
+    {
+      "id": 30,
+      "name": "随机回声",
+      "group": "模型与 Codex",
+      "expensive": false
+    },
+    {
+      "id": 31,
+      "name": "参数透传",
+      "group": "模型与 Codex",
+      "expensive": false
+    },
+    {
+      "id": 32,
+      "name": "输出截断",
+      "group": "模型与 Codex",
+      "expensive": false
+    },
+    {
+      "id": 33,
+      "name": "多轮记忆",
+      "group": "模型与 Codex",
+      "expensive": false
+    },
+    {
+      "id": 34,
+      "name": "编程安全词误杀",
+      "group": "模型与 Codex",
+      "expensive": false
+    },
+    {
+      "id": 35,
+      "name": "多模态真伪",
+      "group": "模型与 Codex",
+      "expensive": true
+    },
+    {
+      "id": 36,
+      "name": "上下文阶梯",
+      "group": "模型与 Codex",
+      "expensive": true
+    },
+    {
+      "id": 37,
+      "name": "阶梯加压",
+      "group": "并发压测",
+      "expensive": false
+    },
+    {
+      "id": 38,
+      "name": "停压条件",
+      "group": "并发压测",
+      "expensive": false
+    },
+    {
+      "id": 39,
+      "name": "每档统计",
+      "group": "并发压测",
+      "expensive": false
+    },
+    {
+      "id": 40,
+      "name": "持续速率",
+      "group": "并发压测",
+      "expensive": true
+    }
+  ],
+  "modes": {
+    "quick": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      16,
+      20,
+      21,
+      22,
+      23,
+      25,
+      27,
+      30
+    ],
+    "full": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
+    "stress": [
+      37,
+      38,
+      39
+    ]
+  }
+}

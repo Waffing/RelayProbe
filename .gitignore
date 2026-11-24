@@ -1,0 +1,16 @@
+.env
+.env.*
+.runtime/
+.venv/
+.test-venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.log
+*.pem
+*.key
+*.pfx
+*.p12
+/releases/
+/*.zip
+relay-probe-rust/validation-results.xml

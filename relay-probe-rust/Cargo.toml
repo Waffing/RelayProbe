@@ -1,0 +1,37 @@
+[package]
+name = "relay-probe"
+version = "2.1.1"
+edition = "2021"
+rust-version = "1.90"
+description = "Local AI relay quality probe with an embedded Chinese console"
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["full"] }
+tokio-util = "0.7"
+hyper = { version = "1", features = ["client", "http1"] }
+hyper-util = { version = "0.1", features = ["client-legacy", "http1", "tokio"] }
+http-body-util = "0.1"
+tower-service = "0.3"
+native-tls = "0.2"
+tokio-native-tls = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+tiktoken-rs = "0.7"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4"] }
+rand = "0.8"
+regex = "1"
+url = "2"
+base64 = "0.22"
+zeroize = "1"
+subtle = "2"
+futures-util = "0.3"
+async-stream = "0.3"
+shell-words = "1"
+png = "0.17"
+
+[profile.release]
+lto = "thin"
+strip = true
+codegen-units = 1

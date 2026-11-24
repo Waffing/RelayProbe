@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light"><title>渠道质量探针 · Relay Probe Web</title>
+  <link rel="stylesheet" href="/styles.css"><script type="module" src="/js/main.js"></script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="#work" aria-label="Relay Probe 工作台"><i class="brandmark" aria-hidden="true"><b></b><b></b><b></b><b></b></i> Relay<span>Probe</span></a>
+  <span class="edition">渠道测评控制台</span><div class="top-actions"><span id="connection" class="connection">连接中</span><button id="theme" class="iconbtn" aria-label="切换浅色主题" title="切换主题">☀</button></div>
+</header>
+<div class="shell">
+<nav class="rail" aria-label="主导航">
+  <div class="navset"><span class="navlabel">工作空间</span>
+    <a href="#work" data-tab="work"><i aria-hidden="true">⌁</i>工作台</a><a href="#report" data-tab="report"><i aria-hidden="true">▤</i>本轮报告</a>
+    <a href="#history" data-tab="history"><i aria-hidden="true">◷</i>历史对比</a></div>
+  <div class="navset"><span class="navlabel">配置</span>
+    <a href="#profiles" data-tab="profiles"><i aria-hidden="true">▧</i>Profile</a><a href="#settings" data-tab="settings"><i aria-hidden="true">☷</i>价格规则</a></div>
+  <div class="railfoot"><span class="pin"></span> Python <small>V2.1.1</small></div>
+</nav>
+<main>
+<section id="page-work" class="page">
+  <div class="titleline"><div><h1>渠道质量探针</h1>
+    <p class="intro">测量模型能力、缓存命中和实际扣费，逐项查看请求证据。</p></div>
+    <button id="start" class="primary big" disabled><span aria-hidden="true">▷</span> 开始检测</button></div>
+  <div class="workspace">
+    <div class="stack">
+    <article class="card"><div class="cardhead"><h2><i class="sectionicon" aria-hidden="true">⇄</i> 渠道连接</h2></div>
+      <div class="fields">
+        <label>渠道备注名<input id="channel" placeholder="例如，我的测试渠道" maxlength="100"></label>
+        <label>请求协议<select id="protocol"><option value="auto">Auto · 优先 Responses</option><option value="responses">仅 Responses</option><option value="chat">仅 Chat Completions</option></select></label>
+        <label class="wide">Base URL<input id="base" type="url" placeholder="https://relay.example.com/v1" autocomplete="off" spellcheck="false"></label>
+        <label class="connection-field">API Key<input id="key" type="password" placeholder="输入本轮测试密钥" autocomplete="off" spellcheck="false"></label>
+        <div class="connection-field model-field">
+          <label for="model">被测模型</label>
+          <div class="input-action"><input id="model" list="models" placeholder="输入或拉取模型" autocomplete="off"><button id="getModels" type="button">拉取模型</button></div>
+          <datalist id="models"></datalist>
+        </div>
+      </div>
+      <p class="privacyline"><span aria-hidden="true">◇</span> 密钥仅在本轮内存中使用。</p>
+      <div class="network-help" id="networkHelp" hidden>
+        <p id="networkNotice" role="alert"></p>
+        <button id="useNetworkCompat" type="button">启用本机网络兼容</button>
+      </div>
+      <details class="fold" id="connectionOptions"><summary>代理、客户端与对账信息</summary><div class="fields inset">
+        <label class="wide">出站代理 URL<input id="proxy" type="password" placeholder="HTTP / HTTPS / SOCKS5，留空直连" autocomplete="off"></label>
+        <div class="local-network wide" id="localNetwork" hidden>
+          <label class="check"><input id="networkCompat" type="checkbox" aria-describedby="networkScope"> 本机代理与 Fake-IP 兼容</label>
+          <small id="networkScope">供本机代理或 Clash / Mihomo 的 HTTPS 域名连接使用。</small>
+        </div>
+        <label>客户端 Profile<select id="profile"></select></label><label class="check"><input id="bare" type="checkbox"> 使用裸请求</label>
+        <label>宣传缓存率（%）<input id="advertised" type="number" min="0" max="100" step="any"></label>
+        <label>额度类型<select id="kind"><option value="balance">剩余余额</option><option value="used">累计已用</option></select></label>
+        <label>测前余额 / 已用额度<input id="before" type="number" min="0" step="any"></label>
+        <label>每美元面板单位<input id="units" type="number" min="0.000001" step="any" value="1"><small>USD 填 1。New API 常见 500000，请按面板确认。</small></label>
+        <label class="wide">自动余额端点的 quota 换算比<input id="quota" type="number" min="0.000001" step="any" placeholder="未配置时跳过原始 quota，只读取明确的美元或美分字段"></label>
+      </div></details>
+    </article>
+    <article class="card"><div class="cardhead"><h2><i class="sectionicon" aria-hidden="true">≋</i> 运行模式</h2></div>
+      <div class="modes" id="modes"><button data-mode="quick"><b>快速检测</b><small>常用能力与账目</small></button><button data-mode="full"><b>完整检测</b><small>深度推理与缓存</small></button><button data-mode="stress"><b>并发压测</b><small>逐档加压与停压</small></button></div>
+      <div class="switches"><label><input type="checkbox" data-exp="35"> 多模态</label><label><input type="checkbox" data-exp="36"> 上下文阶梯</label><label><input type="checkbox" data-exp="40"> 持续速率</label></div>
+      <p class="hint" id="expenseNote">高开销项目默认关闭。</p>
+      <details class="fold"><summary>预算与并发上限</summary><div class="fields inset">
+        <label>预算上限（USD）<input type="number" id="budget" min="0.000001" step="any"></label>
+        <label class="check"><input id="allow50" type="checkbox"> 测试小号，允许最高 50 并发</label>
+        <p id="physical" class="hint wide"></p>
+      </div></details>
+    </article></div>
+    <aside class="stack">
+      <article class="matrixcard"><div class="cardhead"><h2>探针矩阵</h2><span class="matrix-groups">7 组</span></div>
+        <div class="matrixsum"><strong id="activeCount" aria-live="polite">—</strong><span>/ 40 项已选</span></div>
+        <div id="matrix" aria-label="按项选择探针"></div>
+        <div class="legend"><span><i></i>已选</span><span><i></i>未选</span></div>
+        <button class="matrixlink" id="selectItems">按组选择 <span aria-hidden="true">↗</span></button>
+      </article>
+      <article class="ledgercard"><h3>费用口径</h3><p id="priceState">未配置官方单价，已跳过计算</p><a href="#settings">管理模型价格 <b>→</b></a></article>
+    </aside>
+  </div>
+  <article class="card logcard"><div class="cardhead"><h2><i class="sectionicon">›_</i> 运行记录</h2><button class="danger" id="abort" disabled>中止运行</button></div>
+    <div id="liveStats" class="livestats">等待启动</div><progress id="progress" value="0" max="1"></progress>
+    <div id="logs" class="loglines" role="log" aria-live="off">启动后显示协议选择、采样与熔断记录。</div></article>
+  <p class="hint">每轮由后端生成随机盐、题面和长前缀。报告保留本轮盐值，可对照两轮样本检查变化。</p>
+</section>
+<section id="page-report" class="page" hidden><div class="titleline"><h1>检测报告</h1><label class="toggle"><input type="checkbox" id="privacy" checked> 隐私脱敏</label></div><div id="reportView"></div></section>
+<section id="page-history" class="page" hidden><div class="titleline"><h1>历史与对比</h1></div>
+  <article class="card"><div class="cardhead"><h2>本地报告</h2><div class="actions"><button id="exportHistory">导出历史</button><label class="filebtn">导入历史<input type="file" id="importHistory" accept=".json,application/json"></label><button id="clearHistory" class="danger">清空</button></div></div>
+    <p class="hint">勾选渠道可并排对比。历史中的长请求保留截断摘要，完整证据可在本轮报告导出。</p><div id="historyList"></div></article>
+  <article class="card"><h2>渠道对比</h2><div id="comparison"></div></article></section>
+<section id="page-profiles" class="page" hidden><div class="titleline"><h1>客户端 Profile</h1></div>
+  <div class="twocol"><article class="card"><h2>模板库</h2><label>选择模板<select id="editProfile"></select></label>
+    <label>四层配置 JSON<textarea id="profileJson" rows="16" spellcheck="false"></textarea></label>
+    <div class="actions"><button id="saveProfile" class="primary">保存配置</button><button id="downloadProfile">导出 JSON</button><button id="removeProfile" class="danger">删除</button></div>
+    <p class="hint">编辑内置模板会保存为自定义副本。基准由后端重新分词。</p></article>
+    <div class="stack"><article class="card"><h2>粘贴原文导入</h2><label>请求 JSON、Profile JSON 或 cURL<textarea id="rawProfile" rows="5" placeholder="粘贴请求原文，鉴权头在入库前剥离" spellcheck="false"></textarea></label><button id="importProfile">解析并保存</button></article>
+    <article class="card"><h2>本机一次抓包</h2><p class="hint">开启后五分钟内接受一次回环请求。将 CLI 的 base_url 指向下方地址，使用临时抓包口令发送一条空白测试任务。</p>
+      <code id="capturePath"></code><button id="arm">开启一次抓包</button><output id="captureInfo" class="break"></output></article></div></div></section>
+<section id="page-settings" class="page" hidden><div class="titleline"><h1>价格与规则</h1></div>
+  <article class="card"><h2>模型价格表</h2><p class="hint">单位为 USD / 百万 token。填写已核实的单价，保存在当前浏览器。</p>
+    <div class="fourcol"><label>模型标识<input id="priceModel"></label><label>输入单价<input id="priceIn" type="number" min="0" step="any"></label><label>缓存读取单价<input id="priceCached" type="number" min="0" step="any"></label><label>输出单价<input id="priceOut" type="number" min="0" step="any"></label></div>
+    <div class="actions"><button id="savePrice" class="primary">保存价格</button></div><div id="prices"></div></article>
+  <article class="card"><h2>运行配置</h2><p class="hint">物理熔断在未配置单价时生效。权重按 #1 至 #5 顺序填写。</p><div id="controls" class="fields"></div></article>
+  <article class="card"><h2>草案阈值与指纹库</h2><p class="hint">以下候选阈值待用户确认。128 粒度、1024 门槛及停压条件按规格执行。</p><div id="rules" class="fields"></div>
+    <div class="fields inset"><label>计分权重<input id="weights" placeholder="1, 1, 1, 1, 1"></label><label>注入指纹库（tok）<input id="fingerprints" placeholder="4233, 4157"></label></div><div class="actions"><button id="saveRules" class="primary">保存运行配置</button></div></article>
+  <article class="card"><h2>待确认清单</h2><ul id="pendingSettings"></ul></article></section>
+<footer>Relay Probe <span>本地测量工作台</span></footer>
+</main></div>
+<dialog id="picker"><div class="dialoghead"><h2>选择检测项</h2><button data-close="picker" aria-label="关闭选择">×</button></div><div id="checklist"></div><button data-close="picker" class="primary">完成选择</button></dialog>
+<dialog id="auth"><form id="authForm"><h2>控制台口令</h2><label>访问口令<input id="password" type="password" autocomplete="off" required></label><p id="authMessage" class="hint"></p><button class="primary">解锁控制台</button></form></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+</body></html>
